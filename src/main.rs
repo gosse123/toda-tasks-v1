@@ -1,4 +1,4 @@
-use colored_text::Colorize;
+//use colored_text::Colorize;
 use std::io;
 
 struct Taks{
@@ -7,8 +7,29 @@ struct Taks{
     status:bool
 }
 
-fn add(taks:Taks,data:&mut){
+fn add(taks:&Taks,data:&mut Vec<Taks>){
+    let mut name = String::new();
+    let mut status:String = String::new();
+    let mut id :String= String::new();
 
+    io::stdin()
+        .read_line(&mut name)
+        .expect("errreur de lecture");
+
+    io::stdin()
+        .read_line(&mut status)
+        .expect("errreur de lecture");
+    let status:bool = status.trim()
+                            .parse()
+                            .expect("valeur incorrect");
+    io::stdin()
+        .read_line(&mut id)
+        .expect("errreur de lecture");
+    let id:u32 = id.trim()
+                            .parse()
+                            .expect("valeur incorrect");
+
+    data.push(Taks { id, name, status });
 }
 
 
@@ -32,7 +53,7 @@ fn main() {
                         .expect("valeur invalide");
 
         match choise {
-           
+           1=>add(&Taks, &mut base),
         }
     }
 }
