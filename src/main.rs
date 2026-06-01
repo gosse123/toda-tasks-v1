@@ -1,5 +1,5 @@
 //use colored_text::Colorize;
-use std::io;
+use std::{io, process::exit};
 
 #[derive(Debug)]
 struct Taks{
@@ -8,6 +8,8 @@ struct Taks{
     status:bool
 }
 
+impl Taks {
+    
 fn add(data:&mut Vec<Taks>){
     let mut name = String::new();
     let mut status:String = String::new();
@@ -17,7 +19,7 @@ fn add(data:&mut Vec<Taks>){
     io::stdin()
         .read_line(&mut name)
         .expect("errreur de lecture");
-    
+
     println!("entrer le status de la taches");
     io::stdin()
         .read_line(&mut status)
@@ -36,11 +38,12 @@ fn add(data:&mut Vec<Taks>){
     data.push(Taks { id, name, status });
 }
 
+}
 
 fn main() {
     let mut base:Vec<Taks> = Vec::new();
-    let mut choise = String::new();
     loop {
+        let mut choise = String::new();
         println!("1 Ajouter une taches");
         println!("2 Afficher la liste des taches");
         println!("3 marker une taches comme faire");
@@ -57,10 +60,12 @@ fn main() {
                         .expect("valeur invalide");
 
         match choise {
-           1=>add(&mut base),
+           1=>Taks::add(&mut base),
            2=>println!("{:#?}",base),
 
-           _=>println!("invalide")
+        _=>{println!("merci pour votre utilisation");
+            exit(0);
+            }
         }
     }
 }
