@@ -38,6 +38,17 @@ fn add(data:&mut Vec<Taks>){
     data.push(Taks { id, name, status });
 }
 
+fn update(data:&mut Vec<Taks>){
+    let mut id_a_supprimer = String::new();
+    println!("entrer le nom de la taches a supprimer");
+    io::stdin()
+        .read_line(&mut id_a_supprimer)
+        .expect("errreur de lecture");
+    let id_a_supprimer:u32 = id_a_supprimer.trim().parse().expect("invalide");
+
+   data.retain(|data| data.id != id_a_supprimer);
+}
+
 }
 
 fn main() {
@@ -62,6 +73,7 @@ fn main() {
         match choise {
            1=>Taks::add(&mut base),
            2=>println!("{:#?}",base),
+           4=>Taks::update(&mut base),
 
         _=>{println!("merci pour votre utilisation");
             exit(0);
