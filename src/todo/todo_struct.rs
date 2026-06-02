@@ -1,4 +1,6 @@
 use std::io;
+use crate::utils::fn_lecture::{lire_int,lire_bool,lire_str};
+
 
 #[derive(Debug)]
 pub struct Taks {
@@ -7,36 +9,38 @@ pub struct Taks {
     status: bool,
 }
 
-fn lire_int() -> u32 {
-    let mut id: String = String::new();
-    println!("entrer l'id de la taches");
-    io::stdin().read_line(&mut id).expect("errreur de lecture");
-    let id: u32 = id.trim().parse().expect("valeur incorrect");
-    id
-}
-fn lire_bool() -> bool {
-    let mut status: String = String::new();
-    println!("entrer le status de la taches");
-    io::stdin()
-        .read_line(&mut status)
-        .expect("errreur de lecture");
-    let status: bool = status.trim().parse().expect("valeur incorrect");
-    status
-}
-fn lire_str() -> String {
-    let mut name = String::new();
-    println!("entrer le nom de la taches");
-    io::stdin()
-        .read_line(&mut name)
-        .expect("errreur de lecture");
-    name
-}
-
 impl Taks {
     pub fn add(data: &mut Vec<Taks>) {
-        let name = lire_str();
-        let id = lire_int();
-        let status = lire_bool();
+
+        let name = match lire_str() {
+            Ok(name)=>{
+                name
+            },
+            Err(errer)=>{
+                println!("une erreur c'est produit; {:?}",errer);
+                String::from("")
+            }
+        };
+
+        println!("entrer l'id de la tache");
+        let id = match lire_int() {
+            Ok(id)=>{
+                id
+            },
+            Err(erre)=>{
+                println!("une erreur c'est produit {:?}",erre);
+                0
+            }
+        };
+        let status = match lire_bool() {
+            Ok(status)=>{
+                status
+            },
+            Err(erreur)=>{
+                println!("une erreur c'est produit: {:?}",erreur);
+                false
+            }
+        };
         data.push(Taks { id, name, status });
     }
 

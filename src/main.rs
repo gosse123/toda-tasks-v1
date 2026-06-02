@@ -1,29 +1,30 @@
 //use colored_text::Colorize;
 mod todo;
-use std::{io, process::exit};
+mod utils;
+use std::{ process::exit};
 use crate::todo::todo_struct::{Taks};
+use crate::utils::fn_lecture::{ lire_int};
 
-// enum FormError {
-//     EmptyInput,
-//     InvalidEnter,
-//     AgeTooLow,
-// }
+
 
 fn main() {
     let mut base: Vec<Taks> = Vec::new();
     loop {
-        let mut choise = String::new();
         println!("1 Ajouter une taches");
         println!("2 Afficher la liste des taches");
         println!("3 marker une taches comme faire");
         println!("4 supprimer une taches");
         println!("5 quiter");
 
-        io::stdin()
-            .read_line(&mut choise)
-            .expect("erreur de lecture");
-
-        let choise: u32 = choise.trim().parse().expect("valeur invalide");
+        let  choise = match lire_int() {
+            Ok(nombre)=>{
+                nombre
+            },
+            Err(errer)=>{
+                println!("une erreur c'est produite: {:?}",errer);
+                5
+            }
+        };
 
         match choise {
             1 => Taks::add(&mut base),
