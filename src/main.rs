@@ -29,7 +29,7 @@ pub fn load_data()-> Result<Vec<Taks>,FormError>{
     if content.is_empty(){
         return  Ok(Vec::new());
     }else {
-        Ok(serde_json::from_str(&content).map_err(|_|FormError::DesError))
+        
     }
 
 }
