@@ -4,6 +4,9 @@ pub enum FormError {
     EmptyInput,
     InvalidEnter,
     ValueTooLow,
+    FileNotFound,
+    FaiilledRead,
+    DesError
 }
 
 pub fn lire_int() -> Result<u32,FormError> {

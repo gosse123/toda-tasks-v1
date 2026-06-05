@@ -1,7 +1,9 @@
 use std::io;
+use serde::{Serialize,Deserialize};
 use crate::utils::fn_lecture::{lire_int,lire_bool,lire_str};
 
 
+#[derive(Serialize,Deserialize)]
 #[derive(Debug)]
 pub struct Taks {
     id: u32,
@@ -9,7 +11,10 @@ pub struct Taks {
     status: bool,
 }
 
+
 impl Taks {
+    
+
     pub fn add(data: &mut Vec<Taks>) {
 
         let name = match lire_str() {
@@ -90,3 +95,4 @@ impl Taks {
         }
     }
 }
+
