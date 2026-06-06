@@ -1,7 +1,13 @@
 use std::io;
 use serde::{Serialize,Deserialize};
 use crate::utils::fn_lecture::{lire_int,lire_bool,lire_str};
+use std::fs::OpenOptions;
+use std::io:: Write;
 
+
+
+use crate::utils::fn_lecture::{ FormError};
+use std::path::Path;
 
 #[derive(Serialize,Deserialize)]
 #[derive(Debug)]
@@ -12,10 +18,25 @@ pub struct Taks {
 }
 
 
+fn sauvegarder(path: &str, contenu: &str) -> Result<(), FormError> {
+    let mut fichier = OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)  // écrase l'ancien contenu
+        .open(path)
+        .map_err(|_| FormError::FailedWrite)?;
+
+    fichier.write_all(contenu.as_bytes())
+        .map_err(|_| FormError::FailedWrite)?;
+
+    Ok(())
+}
+
+
 impl Taks {
     
 
-    pub fn add(data: &mut Vec<Taks>) {
+    pub fn add(data: &mut Vec<Taks>,path: &str) {
 
         let name = match lire_str() {
             Ok(name)=>{
@@ -47,6 +68,9 @@ impl Taks {
             }
         };
         data.push(Taks { id, name, status });
+
+    let base_json = serde_json::to_string_pretty(&data);
+    sauvegarder(path, & base_json);
     }
 
     pub fn update(data: &mut Vec<Taks>) {
